@@ -2,7 +2,7 @@
     "target": {
         "name": "codal-microbit-v2",
         "url": "git@github.com:microbit-petek/codal-microbit-v2.git",
-        "branch": "forked-targets",
+        "branch": "interface-emulator",
         "type": "git",
         "dev": true
     },
