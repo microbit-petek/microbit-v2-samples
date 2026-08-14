@@ -76,15 +76,15 @@ void ble_test()
     
     uBit.messageBus.listen(MICROBIT_ID_BLE_UART, MICROBIT_UART_S_EVT_DELIM_MATCH, onDelim);
 
-    new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer);
-    new MicroBitButtonService(*uBit.ble);
-    new MicroBitIOPinService(*uBit.ble, uBit.io);
-    new MicroBitLEDService(*uBit.ble, uBit.display);
-    new MicroBitMagnetometerService(*uBit.ble, uBit.compass);
-    new MicroBitTemperatureService(*uBit.ble, uBit.thermometer);
+    // new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer);
+    // new MicroBitButtonService(*uBit.ble);
+    // new MicroBitIOPinService(*uBit.ble, uBit.io);
+    // new MicroBitLEDService(*uBit.ble, uBit.display);
+    // new MicroBitMagnetometerService(*uBit.ble, uBit.compass);
+    // new MicroBitTemperatureService(*uBit.ble, uBit.thermometer);
 
-    uart = new MicroBitUARTService(*uBit.ble, 32, 32);
-    uart->eventOn("\r\n");
+    // uart = new MicroBitUARTService(*uBit.ble, 32, 32);
+    // uart->eventOn("\r\n");
 
     // A cunning code to indicate during start-up the particular Bluetooth configuration in the build
     //
