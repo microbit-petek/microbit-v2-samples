@@ -1,5 +1,8 @@
+#include "CodalFiber.h"
 #include "MicroBit.h"
 #include "MicroBitAccelerometerService.h"
+#include "MicroBitBLEService.h"
+#include "MicroBitDevice.h"
 
 MicroBit uBit;
 
@@ -13,6 +16,11 @@ void onDisconnected(MicroBitEvent)
     uBit.display.print("D");
 }
 
+static void rxFiber(void * uartBle)
+{
+    ((UartBle*)uartBle)->runRx();
+}
+
 int main()
 {
     uBit.init();
@@ -20,7 +28,15 @@ int main()
     uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_CONNECTED, onConnected);
     uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_DISCONNECTED, onDisconnected);
 
+    uBit.serial.setBaudrate(230400);
+
     uBit.ble->init(microbit_friendly_name(), uBit.getSerial(), uBit.messageBus, uBit.storage, true);
+
+    UartBle *serial = new UartBle(uBit.serial, uBit.accelerometer);
+
+    new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer, *serial);
+
+    create_fiber(rxFiber, serial);
 
     if (uBit.ble->getBondCount() == 0)
     {
