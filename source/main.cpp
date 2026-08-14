@@ -6,6 +6,14 @@
 
 MicroBit uBit;
 
+void startPairing()
+{
+
+    uBit.display.print(microbit_friendly_name());
+    uBit.ble->advertise();
+    uBit.ble->pairingMode(uBit.display, uBit.buttonA);
+}
+
 void onConnected(MicroBitEvent)
 {
     uBit.display.print("C");
@@ -16,9 +24,14 @@ void onDisconnected(MicroBitEvent)
     uBit.display.print("D");
 }
 
-static void rxFiber(void * uartBle)
+void onAB(MicroBitEvent)
 {
-    ((UartBle*)uartBle)->runRx();
+    startPairing();
+}
+
+static void rxFiber(void *uartBle)
+{
+    ((UartBle *)uartBle)->runRx();
 }
 
 int main()
@@ -27,6 +40,7 @@ int main()
 
     uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_CONNECTED, onConnected);
     uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_DISCONNECTED, onDisconnected);
+    uBit.messageBus.listen(MICROBIT_ID_BUTTON_AB, MICROBIT_BUTTON_EVT_DOWN, onAB);
 
     uBit.serial.setBaudrate(230400);
 
@@ -35,14 +49,13 @@ int main()
     UartBle *serial = new UartBle(uBit.serial, uBit.accelerometer);
 
     new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer, *serial);
+    new MicroBitIOPinService(*uBit.ble, uBit.io, *serial);
 
     create_fiber(rxFiber, serial);
 
     if (uBit.ble->getBondCount() == 0)
     {
-        uBit.display.print(microbit_friendly_name());
-        uBit.ble->advertise();
-        uBit.ble->pairingMode(uBit.display, uBit.buttonA);
+        startPairing();
     }
 
     release_fiber();
