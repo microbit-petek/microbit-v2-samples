@@ -49,7 +49,7 @@ int main()
     UartBle *serial = new UartBle(uBit.serial, uBit.accelerometer);
 
     new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer, *serial);
-    new MicroBitIOPinService(*uBit.ble, uBit.io, *serial);
+    new MicroBitMagnetometerService(*uBit.ble, uBit.compass, *serial);
 
     create_fiber(rxFiber, serial);
 
