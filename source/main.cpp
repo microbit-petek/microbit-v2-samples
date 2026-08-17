@@ -46,7 +46,7 @@ int main()
 
     uBit.ble->init(microbit_friendly_name(), uBit.getSerial(), uBit.messageBus, uBit.storage, true);
 
-    UartBle *serial = new UartBle(uBit.serial, uBit.accelerometer);
+    UartBle *serial = new UartBle(uBit.serial);
 
     new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer, *serial);
     new MicroBitMagnetometerService(*uBit.ble, uBit.compass, *serial);
