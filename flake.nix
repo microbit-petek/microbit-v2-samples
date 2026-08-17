@@ -29,6 +29,13 @@
             pkgs.git
             pkgs.cmake
             pkgs.python3
+
+            # Debugging
+            pkgs.openocd
+            pkgs.nodejs
+
+            # Python packages
+            pkgs.python313Packages.pyserial
           ];
         };
       });
