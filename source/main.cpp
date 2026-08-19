@@ -48,15 +48,13 @@ int main()
 
     UartBle *serial = new UartBle(uBit.serial);
 
-    new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer, *serial);
-    new MicroBitMagnetometerService(*uBit.ble, uBit.compass, *serial);
+    // new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer, *serial);
+    // new MicroBitMagnetometerService(*uBit.ble, uBit.compass, *serial);
+    // new MicroBitIOPinService(*uBit.ble, uBit.io, *serial);
 
     create_fiber(rxFiber, serial);
 
-    if (uBit.ble->getBondCount() == 0)
-    {
-        startPairing();
-    }
+    uBit.display.printChar('i');
 
     release_fiber();
 
