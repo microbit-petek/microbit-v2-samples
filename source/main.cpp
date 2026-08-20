@@ -26,7 +26,7 @@ void onDisconnected(MicroBitEvent)
 
 void onAB(MicroBitEvent)
 {
-    startPairing();
+    create_fiber(startPairing);
 }
 
 static void rxFiber(void *uartBle)
@@ -48,9 +48,9 @@ int main()
 
     UartBle *serial = new UartBle(uBit.serial);
 
-    // new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer, *serial);
-    // new MicroBitMagnetometerService(*uBit.ble, uBit.compass, *serial);
-    // new MicroBitIOPinService(*uBit.ble, uBit.io, *serial);
+    new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer, *serial);
+    new MicroBitMagnetometerService(*uBit.ble, uBit.compass, *serial);
+    new MicroBitIOPinService(*uBit.ble, uBit.io, *serial);
 
     create_fiber(rxFiber, serial);
 
