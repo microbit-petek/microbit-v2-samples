@@ -51,6 +51,7 @@ int main()
     new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer, *serial);
     new MicroBitMagnetometerService(*uBit.ble, uBit.compass, *serial);
     new MicroBitIOPinService(*uBit.ble, uBit.io, *serial);
+    new MicroBitLEDService(*uBit.ble, uBit.display, *serial);
 
     create_fiber(rxFiber, serial);
 
