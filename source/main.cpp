@@ -52,6 +52,7 @@ int main()
     new MicroBitMagnetometerService(*uBit.ble, uBit.compass, *serial);
     new MicroBitIOPinService(*uBit.ble, uBit.io, *serial);
     new MicroBitLEDService(*uBit.ble, uBit.display, *serial);
+    new MicroBitPartialFlashingService(*uBit.ble, uBit.messageBus, uBit.storage, *serial);
 
     create_fiber(rxFiber, serial);
 
