@@ -53,6 +53,7 @@ int main()
     new MicroBitIOPinService(*uBit.ble, uBit.io, *serial);
     new MicroBitLEDService(*uBit.ble, uBit.display, *serial);
     new MicroBitPartialFlashingService(*uBit.ble, uBit.messageBus, uBit.storage, *serial);
+    new MicroBitTemperatureService(*uBit.ble, uBit.thermometer, *serial);
 
     create_fiber(rxFiber, serial);
 
