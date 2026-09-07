@@ -81,6 +81,7 @@ There is an example `coda.dev.json` file which enables "developer builds" (clone
 To use it, simply copy the additional json entries into your `codal.json` file, or you can replace the file completely (`mv coda.dev.json codal.json`).
 
 # Debugging
+## VS Code
 If you are using Visual Studio Code, there is a working debugging environment already set up for you, allowing you to set breakpoints and observe the micro:bit's memory. To get it working, follow these steps:
 
 1. Install either [OpenOCD](http://openocd.org) or [PyOCD](https://github.com/pyocd/pyOCD).
@@ -90,6 +91,22 @@ If you are using Visual Studio Code, there is a working debugging environment al
 5. Two debugging options are provided: one for OpenOCD, and one for PyOCD. Select the correct one depending on the debugger you installed.
 
 This should launch the debugging environment for you. To set breakpoints, you can click to the left of the line number of where you want to stop.
+
+## gdb
+You can also use `gdb` for debugging.
+If you are not using the nix devshell, install OpenOCD with the link in the previous section.
+If you are using the devshell, it will already be available.
+1. Build your program
+2. Run `openocd -f interface/cmsis-dap.cfg -f target/nrf52.cfg`
+3. In a second terminal, run
+```
+    arm-none-eabi-gdb build/MICROBIT -tui \
+    -ex "target extended-remote :3333" \
+    -ex "monitor reset halt" \
+    -ex "load"
+```
+This will reset and halt the MCU and flash your binary onto it.
+Once the binary is flashed, you can re-attach with the same command, just removing the last two `-ex` arguments.
 
 # Compatibility
 This repository is designed to follow the principles and APIs developed for the first version of the micro:bit. We have also included a compatibility layer so that the vast majority of C/C++ programs built using [microbit-dal](https://www.github.com/lancaster-university/microbit-dal) will operate with few changes.
