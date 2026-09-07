@@ -20,19 +20,30 @@
           (system: f {
             pkgs = import nixpkgs { inherit system; };
           });
+
     in
     {
-      devShells = forEachSupportedSystem ({ pkgs }: {
-        default = pkgs.mkShell {
-          packages = [
-            # Build toolchain
-            pkgs.gcc-arm-embedded-13
-            pkgs.git
-            pkgs.cmake
-            pkgs.python3
+      devShells = forEachSupportedSystem ({ pkgs }:
+        let
+          commonPackages = [
+                # Build toolchain
+                pkgs.gcc-arm-embedded-13
+                pkgs.git
+                pkgs.cmake
+                pkgs.python3
 
-            # Debugging
-            pkgs.openocd
+                # Debugging
+                pkgs.openocd
+          ];
+        in
+        {
+        default = pkgs.mkShell {
+          packages = commonPackages;
+        };
+
+        ninja = pkgs.mkShell {
+          packages = commonPackages ++ [
+            pkgs.ninja
           ];
         };
       });
