@@ -42,6 +42,29 @@ To omit the final output stage (for CI, for example) run without the `--output` 
     docker build -t microbit-tools .
 ```
 
+## Nix flake
+A hashed and locked dev environment is provided via a nix flake.
+This avoids polluting your system environment with tooling required for a particular project.
+
+Install nix by following the instructions [here](https://nix.dev/install-nix.html).
+
+To set up and enter the dev environment, run `nix develop`.
+Optionally, if you want to use `ninja` to build, run `nix develop .#ninja` to include this package in the environment.
+Ninja can help speed up build times on slow machines.
+While inside the environment, all the build tooling will be available on the command line with the specified versions.
+Pressing Ctrl-D will exit the environment and the tooling will no longer be accessible.
+
+You can also optionally automate this process by installing [direnv](https://direnv.net/docs/installation.html).
+Having done this, run
+```sh
+echo "use flake" >> .envrc
+direnv allow
+```
+Once this is done, entering the repo directory will automatically activate the devshell.
+Navigating out of the directory will deactivate it.
+This comes with the added benefit of keeping your shell profile active.
+As above, if you wish to use `ninja`, replace the echo call with `echo "use flake .#ninja" >> .envrc`.
+
 # Building
 - Clone this repository
 - In the root of this repository type `python build.py`
