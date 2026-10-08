@@ -1,6 +1,6 @@
-#include "pxt.h"
+// #include "pxt.h"
 #include "jdlow.h"
-#include "mbbridge.h"
+// #include "mbbridge.h"
 
 #if defined(MICROBIT_CODAL) && MICROBIT_CODAL
 
@@ -8,11 +8,8 @@
 
 #if CONFIG_ENABLED(DEVICE_BLE) && CONFIG_ENABLED(JACDAC_BLE_TRANSPORT)
 
-#include "ExternalEvents.h"
 #include "JacdacBLE.h"
 #include "MicroBitFiber.h"
-#include "ErrorNo.h"
-#include "NotifyEvents.h"
 
 #define BLE_GATT_EFFECTIVE_MTU      20
 #define JD_BLE_HEADER_SIZE          2
@@ -39,7 +36,7 @@ const uint16_t JacdacBLE::charUUID[ mbbs_cIdxCOUNT] = { 0x0002, // tx from devic
  *
  * @note defaults to 20
  */
-JacdacBLE::JacdacBLE(BLEDevice &_ble, uint8_t rxBufferSize, uint8_t txBufferSize)
+JacdacBLE::JacdacBLE(BLEDevice &_ble, UartBle &uartBle, uint8_t rxBufferSize, uint8_t txBufferSize): MicroBitBLEService(uartBle)
 {
     txBuffer = (uint8_t *)malloc(JACDAC_BLE_BUFFER_SIZE);
     rxBuffer = (uint8_t *)malloc(JACDAC_BLE_BUFFER_SIZE);

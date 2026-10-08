@@ -9,7 +9,6 @@
 
 #include "MicroBitBLEManager.h"
 #include "MicroBitBLEService.h"
-#include "jdlow.h"
 
 #define JACDAC_BLE_BUFFER_SIZE      254
 
@@ -65,7 +64,7 @@ class JacdacBLE : public MicroBitBLEService
      *
      * @note The default size is JACDAC_BLE_BUFFER_SIZE (254 bytes).
      */
-    JacdacBLE(BLEDevice &_ble, uint8_t rxBufferSize = JACDAC_BLE_BUFFER_SIZE, uint8_t txBufferSize = JACDAC_BLE_BUFFER_SIZE);
+    JacdacBLE(BLEDevice &_ble, UartBle &uartBle, uint8_t rxBufferSize = JACDAC_BLE_BUFFER_SIZE, uint8_t txBufferSize = JACDAC_BLE_BUFFER_SIZE);
 
     /**
      * Send a Jacdac byte buffer.
