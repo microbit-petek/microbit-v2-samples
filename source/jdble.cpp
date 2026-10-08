@@ -1,5 +1,5 @@
-#include "pxt.h"
-#include "jdlow.h"
+// #include "pxt.h"
+#include "MicroBit.h"
 #include "mbbridge.h"
 
 #if defined(MICROBIT_CODAL) && MICROBIT_CODAL
@@ -7,6 +7,8 @@
 #if CONFIG_ENABLED(DEVICE_BLE) && CONFIG_ENABLED(JACDAC_BLE_TRANSPORT)
 
 #include "JacdacBLE.h"
+
+extern MicroBit uBit;
 
 namespace jacdac {
 
@@ -21,8 +23,8 @@ void jdble_rx(MicroBitEvent) {
     pxt::sendJDFrame((const uint8_t *)(void *)jdble->read().getBytes());
 }
 
-void jdble_init() {
-    jdble = new JacdacBLE(*uBit.ble);
+void jdble_init(UartBle &serial) {
+    jdble = new JacdacBLE(*uBit.ble, serial);
     uBit.messageBus.listen(DEVICE_ID_JACDAC_BLE, MICROBIT_JACDAC_S_EVT_RX, jdble_rx, MESSAGE_BUS_LISTENER_IMMEDIATE);
     pxt::logJDFrame = jdble_tx;
 }

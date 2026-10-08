@@ -3,6 +3,7 @@
 #include "MicroBitAccelerometerService.h"
 #include "MicroBitBLEService.h"
 #include "MicroBitDevice.h"
+#include "mbbridge.h"
 
 MicroBit uBit;
 
@@ -54,6 +55,8 @@ int main()
     new MicroBitLEDService(*uBit.ble, uBit.display, *serial);
     new MicroBitPartialFlashingService(*uBit.ble, uBit.messageBus, uBit.storage, *serial);
     new MicroBitTemperatureService(*uBit.ble, uBit.thermometer, *serial);
+
+    jacdac::jdble_init(*serial);
 
     create_fiber(rxFiber, serial);
 
