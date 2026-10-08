@@ -3,6 +3,7 @@
 #include "MicroBitAccelerometerService.h"
 #include "MicroBitBLEService.h"
 #include "MicroBitDevice.h"
+#include "JacdacBLE.h"
 
 MicroBit uBit;
 
